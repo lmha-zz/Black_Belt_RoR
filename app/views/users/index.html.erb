@@ -1,0 +1,47 @@
+<% content_for :title do %>
+  Users
+<% end %>
+
+<div class="row">
+  <div class="small-12 columns text-right">
+    <%= link_to "My Profile", dashboard_index_path %>
+    <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <h4>Users you may want to connect with:</h4>
+  </div>
+</div>
+
+<% if flash[:error] %>
+  <div class="row">
+    <div class="small-12 columns">
+      <p><%= flash[:error] %></p>
+    </div>
+  </div>
+<% end %>
+<% if flash[:notice] %>
+  <div class="row">
+    <div class="small-12 columns">
+      <p><%= flash[:notice] %></p>
+    </div>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: 'nonfriended' %>
+      </tbody>
+    </table>
+  </div>
+</div>

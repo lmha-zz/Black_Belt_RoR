@@ -1,0 +1,17 @@
+<% if @friendship.blank? %>
+  <div class="row">
+    <div class="small-12 columns">
+      <p>You currently have no friends.</p>
+    </div>
+  </div>
+<% end %>
+<% @friendship.each do |friendship| %>
+  <div class="row">
+    <div class="small-1 columns text-right">
+      <%= link_to "Unfriend", friendship_path(friendship.friend_id), method: :delete %>
+    </div>
+    <div class="small-11 columns">
+      <p><%= User.find(friendship.friend_id).name %></p>
+    </div>
+  </div>
+<% end %>

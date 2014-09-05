@@ -1,0 +1,16 @@
+<% if @pendingFriends.blank? %>
+  <div class="row">
+    <div class="small-12 columns">
+      <p>You currently have no friends awaiting approval.</p>
+    </div>
+  </div>
+<% end %>
+<% @pendingFriends.each do |friendship| %>
+<% already_friends = Friendship.where("user_id = #{current_user.id} AND friend_id = #{friendship.user_id}") %>
+  <% if already_friends.count == 0 %>
+      <tr>
+        <td><%= link_to User.find(friendship.user_id).name, user_path(friendship.user_id) %></td>
+        <td><%= link_to "Accept Invite", friendships_path(:friend_id => friendship.user_id), method: :post %> | <%= link_to "Ignore", friendships_path(:friend_id => friendship.friend_id), method: :post %></td>
+      </tr>
+  <% end %>
+<% end %>

@@ -1,0 +1,55 @@
+<% content_for :title do %>
+  Professional Profile
+<% end %>
+
+<div class="row">
+  <div class="small-12 columns text-right">
+    <%= link_to "All Users", users_path %>
+    <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <h1>Hi <%= current_user.name %>!</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <h5>Here is your profile description:</h5>
+    <%= form_for(current_user) do |u|%>
+    <div id="prof_desc">
+      <%= u.text_area :description, value: current_user.description %>
+    </div>
+      <%= u.submit 'Update Porfile Description' %>
+      <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <h5>Your Professional Network:</h5>
+    <div id="friend_wrapper">
+      <%= render partial: 'friends' %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <h5>Invitations:</h5>
+    <h6>The following people are requesting to connect with you:</h6>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: 'pending' %>
+      </tbody>
+    </table>
+  </div>
+</div>
