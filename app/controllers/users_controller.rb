@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show]
   def index
-    @users = User.joins("LEFT JOIN friendships ON users.id = friendships.user_id").group("id").where("users.id != #{current_user.id}").where("NOT EXISTS (SELECT NULL FROM friendships WHERE friendships.user_id = users.id AND user_id = #{current_user.id})")
+    friends = current_user.friend_ids
+    if friends.empty?
+      @users = User.where.not("id = #{current_user.id}")
+    else
+      @users = User.where.not("id IN (?) OR id = ?", friends, current_user.id)
+    end
   end
 
   def show
